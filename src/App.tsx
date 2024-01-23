@@ -10,19 +10,16 @@ function App() {
       id: 1,
       type: 'warning',
       content: 'This alert can be closed on button click',
-      canClose: true,
     },
     {
       id: 2,
-      type: 'success',
-      content: 'This alert cannot be closed',
-      canClose: false,
+      type: 'danger',
+      content: 'This alert can also be closed on button click',
     },
     {
       id: 3,
-      type: 'danger',
+      type: 'success',
       content: 'This alert can be closed on click',
-      canClose: true,
       clickDismissable: true,
     },
   ]);
@@ -49,10 +46,10 @@ function App() {
   };
 
   return (
-    <div className='container'>
+    <div className='container d-flex flex-column align-items-center'>
       <button
         type='button'
-        className='btn btn-success'
+        className='btn btn-success my-5'
         onClick={() => setShowModal(true)}
       >
         Show Modal
@@ -79,7 +76,7 @@ function App() {
           key={alert.id}
           type={alert.type}
           id={alert.id}
-          onDismiss={alert.canClose ? closeAlert : undefined}
+          onDismiss={closeAlert}
           clickDismissable={alert.clickDismissable}
         >
           <span>{alert.content}</span>
