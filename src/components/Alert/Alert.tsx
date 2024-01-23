@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface AlertProps extends React.PropsWithChildren {
   id: number;
@@ -15,7 +16,11 @@ const Alert: React.FC<AlertProps> = ({
   clickDismissable,
 }) => {
   return (
-    <div
+    <motion.div
+      key={id}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{ duration: 0.2 }}
       className={`alert alert-${type} w-50 d-flex align-items-center justify-content-between`}
       onClick={clickDismissable && onDismiss ? () => onDismiss(id) : undefined}
     >
@@ -29,7 +34,7 @@ const Alert: React.FC<AlertProps> = ({
           ></button>
         )
       ) : null}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface ModalProps extends React.PropsWithChildren {
   title: string;
@@ -19,20 +19,19 @@ const modalVariants = {
 
 const Modal: React.FC<ModalProps> = ({ title, show, onClose, children }) => {
   return (
-    <AnimatePresence>
+    <>
       <motion.div
-        key={Math.random()}
+        key={'backdrop'}
         animate={show ? 'open' : 'closed'}
         variants={backdropVariants}
-        exit={'closed'}
         transition={{ duration: 0.5 }}
         className='modal-backdrop show'
         style={{ display: show ? 'block' : 'none' }}
       />
       <motion.div
+        key={'modal'}
         animate={show ? 'open' : 'closed'}
         variants={modalVariants}
-        exit={'closed'}
         transition={{ duration: 0.5 }}
         className='modal show'
         style={{ display: show ? 'block' : 'none' }}
@@ -52,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({ title, show, onClose, children }) => {
           </div>
         </div>
       </motion.div>
-    </AnimatePresence>
+    </>
   );
 };
 

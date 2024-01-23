@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from './components/Modal/Modal';
 import Alert from './components/Alert/Alert';
 import { AlertType } from './types';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -71,17 +72,19 @@ function App() {
           ))}
         </div>
       </Modal>
-      {alerts.map((alert) => (
-        <Alert
-          key={alert.id}
-          type={alert.type}
-          id={alert.id}
-          onDismiss={closeAlert}
-          clickDismissable={alert.clickDismissable}
-        >
-          <span>{alert.content}</span>
-        </Alert>
-      ))}
+      <AnimatePresence>
+        {alerts.map((alert) => (
+          <Alert
+            key={alert.id}
+            type={alert.type}
+            id={alert.id}
+            onDismiss={closeAlert}
+            clickDismissable={alert.clickDismissable}
+          >
+            <span>{alert.content}</span>
+          </Alert>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
