@@ -1,9 +1,31 @@
 import { useState } from 'react';
 import Modal from './components/Modal/Modal';
 import Alert from './components/Alert/Alert';
+import { AlertType } from './types';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
+  const [alerts, setAlerts] = useState<AlertType[]>([
+    {
+      id: 1,
+      type: 'warning',
+      content: 'This alert can be closed on button click',
+      canClose: true,
+    },
+    {
+      id: 2,
+      type: 'success',
+      content: 'This alert cannot be closed',
+      canClose: false,
+    },
+    {
+      id: 3,
+      type: 'danger',
+      content: 'This alert can be closed on click',
+      canClose: true,
+      clickDismissable: true,
+    },
+  ]);
 
   const modalButtons = [
     {
@@ -22,8 +44,8 @@ function App() {
     setShowModal(false);
   };
 
-  const closeAlert = (e: React.MouseEvent) => {
-    e.currentTarget.parentElement?.remove();
+  const closeAlert = (id: number) => {
+    setAlerts((prevState) => prevState.filter((alert) => alert.id !== id));
   };
 
   return (
@@ -52,18 +74,17 @@ function App() {
           ))}
         </div>
       </Modal>
-      <Alert type='warning' onDismiss={closeAlert}>
-        <span>This is a warning type alert</span>
-      </Alert>
-      <Alert type='success'>
-        <span>This is a success type alert</span>
-      </Alert>
-      <Alert type='danger' onDismiss={closeAlert}>
-        <span>This is a danger type alert</span>
-      </Alert>
-      <Alert type='primary'>
-        <span>This is a primary type alert</span>
-      </Alert>
+      {alerts.map((alert) => (
+        <Alert
+          key={alert.id}
+          type={alert.type}
+          id={alert.id}
+          onDismiss={alert.canClose ? closeAlert : undefined}
+          clickDismissable={alert.clickDismissable}
+        >
+          <span>{alert.content}</span>
+        </Alert>
+      ))}
     </div>
   );
 }
