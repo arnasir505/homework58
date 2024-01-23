@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from './components/Modal/Modal';
+import Alert from './components/Alert/Alert';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -19,6 +20,10 @@ function App() {
 
   const cancel = () => {
     setShowModal(false);
+  };
+
+  const closeAlert = (e: React.MouseEvent) => {
+    e.currentTarget.parentElement?.remove();
   };
 
   return (
@@ -47,6 +52,18 @@ function App() {
           ))}
         </div>
       </Modal>
+      <Alert type='warning' onDismiss={closeAlert}>
+        <span>This is a warning type alert</span>
+      </Alert>
+      <Alert type='success'>
+        <span>This is a success type alert</span>
+      </Alert>
+      <Alert type='danger' onDismiss={closeAlert}>
+        <span>This is a danger type alert</span>
+      </Alert>
+      <Alert type='primary'>
+        <span>This is a primary type alert</span>
+      </Alert>
     </div>
   );
 }
