@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Modal from './components/Modal/Modal';
 import Alert from './components/Alert/Alert';
 import { AlertType } from './types';
-import { motion } from 'framer-motion';
 
 function App() {
   const [showModal, setShowModal] = useState(false);

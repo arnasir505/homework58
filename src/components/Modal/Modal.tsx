@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ModalProps extends React.PropsWithChildren {
   title: string;
@@ -6,14 +7,33 @@ interface ModalProps extends React.PropsWithChildren {
   onClose: React.MouseEventHandler;
 }
 
+const backdropVariants = {
+  open: { opacity: 0.5 },
+  closed: { opacity: 0 },
+};
+
+const modalVariants = {
+  open: { opacity: 1, y: 0 },
+  closed: { opacity: 0, y: '-100%' },
+};
+
 const Modal: React.FC<ModalProps> = ({ title, show, onClose, children }) => {
   return (
-    <>
-      <div
+    <AnimatePresence>
+      <motion.div
+        key={Math.random()}
+        animate={show ? 'open' : 'closed'}
+        variants={backdropVariants}
+        exit={'closed'}
+        transition={{ duration: 0.5 }}
         className='modal-backdrop show'
         style={{ display: show ? 'block' : 'none' }}
       />
-      <div
+      <motion.div
+        animate={show ? 'open' : 'closed'}
+        variants={modalVariants}
+        exit={'closed'}
+        transition={{ duration: 0.5 }}
         className='modal show'
         style={{ display: show ? 'block' : 'none' }}
         onClick={onClose}
@@ -31,8 +51,8 @@ const Modal: React.FC<ModalProps> = ({ title, show, onClose, children }) => {
             {children}
           </div>
         </div>
-      </div>
-    </>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
